@@ -1,7 +1,8 @@
 const VALUE={
     cart:0,
     items:[],
-    list:[]
+    list:[],
+    signed:0
 }
 export default function cartReducer(
     state= VALUE, action){
@@ -47,12 +48,36 @@ export default function cartReducer(
                                             }
             case "POP_FROM_LIST":
                                 
-                                            state.list.splice(action.payload, 1)
+                                                let foundIndex = -1;
+
+                                                for (let i = 0; i < state.list.length; i++) {
+                                                const currentProduct = state.list[i];
+                                                console.log(currentProduct["id"] )
+                                                console.log(action.payload["id"])
+                                                if (currentProduct["id"] === action.payload["id"]) {
+                                                    
+                                                    
+                                                    console.log(i+"index frod reducer")
+                                                    state.list.splice(i, 1)
+                                                    break; 
+                                                }
+                                                }                                
+            
                                             
                                                 return{
                                                     ...state,
                                                     
-                                                }          
+                                                }  
+                                                
+                                                case "SIGN":
+                                                    console.log(action.payload+"reducer")
+                                                        return{
+                                                            ...state,
+                                                            signed:action.payload,
+                                                            
+                                                        }
+
+                                                       
             default:
                 return state
         }

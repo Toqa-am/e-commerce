@@ -1,13 +1,42 @@
 import { useSelector, useDispatch } from "react-redux";
 import CartCard from "./CartCard";
-import { incItem, delItem, popItem } from "../Store/action";
+import {  popItem } from "../Store/action";
+import { useEffect,useState } from "react";
 
 export default function Cart(){
     const items=useSelector((state)=>state.items)
-    let cart=useSelector((state)=>state.cart)
+    const signed=useSelector((state)=>state.signed)
+    const[products,setProducts]=useState([])
+    console.log(products.length+"hbhkv")
+    let total=0
+    let taxes=0
     const dispatcher=useDispatch()
+    useEffect(() => {
+        setProducts(items)
 
-    const grouped = items.reduce((acc, item, index) => {
+      }, [items]);
+
+    function confirm(){
+      if(signed===1){
+        alert("Your Order have been confirmed")
+      }
+      else{
+        alert("You're Not Signed in, please Sign in first!")
+
+      }
+    }
+
+      
+              
+        products.map((prod) => (
+          total=total+(Number(prod.price)*Number(prod.quant))
+        ))
+
+
+
+
+
+    const grouped = products.reduce((acc, item, index) => {
         const groupIndex = Math.floor(index / 3);
         if (!acc[groupIndex]) {
           acc[groupIndex] = [];
@@ -17,32 +46,42 @@ export default function Cart(){
       }, []);
 
       const inc=(prod,ind)=>{
-        dispatcher(incItem(1))
-        prod.quant=prod.quant+1
+        setProducts((prevProducts) =>
+      prevProducts.map((product) =>
+        product.id === prod.id
+          ? { ...product, quant: product.quant + 1 }
+          : product
+      )
+    );
+
         }
 
         const dec=(prod,ind)=>{
-
-            if (prod.quant===1||prod.quant===0){
-                console.log(prod.quant+"quant from dec")
-                prod.quant=prod.quant-1
-
+            if(prod.quant===1){
                 dispatcher(popItem(ind))
+                const neww =products.filter((product) =>product.id!==prod.id)
+                setProducts(neww)
             }
-            else if(prod.quant>1){
-                prod.quant=prod.quant-1
-                dispatcher(delItem(1))
+            
+            else{
+                setProducts((prevProduct) =>
+                prevProduct.map((product) =>
+            
+                product.id === prod.id && product.quant > 1
+                ? { ...product, quant: product.quant - 1 }
+                : product
+            )
+            );
             }
-            return prod.quant;
+            }
 
-            }
+            
     return (
         <>
         <div>
             {grouped.map((group, index) => (
                 <div key={index} className="d-flex justify-content-around flex-wrap" style={{ display: 'flex' }}>
                 {group.map((prod, productIndex) => (
-                    console.log(prod.quant+"quant from map"),
                     <CartCard
                     src={prod.image}
                     title={prod.title}
@@ -57,6 +96,23 @@ export default function Cart(){
                 ))}
                 </div>
             ))}
+            
+
+            <div className={"border border-warning "+(products.length===0 ? "invisible":"visible")}>
+              {console.log(products.length+"dvfdvdf")}
+              Total products price=
+              
+              {total}
+              <br></br>
+              Taxes:
+              
+              {taxes =total*14/100}
+              <br></br>
+              Total:
+              {total+taxes}
+              <br></br>
+              <button className="btn btn-warning" onClick={()=>confirm()}>confirm purchasing</button>
+            </div>
         </div>
         
 

@@ -7,11 +7,10 @@ import { useDispatch } from 'react-redux';
 
 export default function Product(props){
     const product = props.match.params.id;
-    // props.match.params.id
     console.log(product)
     const items=useSelector((state)=>state.items)
     const list=useSelector((state)=>state.list)
-    console.log(list)
+    // console.log(list)
     const dispatcher=useDispatch()
 
     const addToCart=(prod)=>{
@@ -26,7 +25,9 @@ export default function Product(props){
 
 
     const addWL=(prod)=>{
+      
         dispatcher(addListItem(prod))
+        prod.addWl=1
         console.log(prod)
     }
     const [prod, setProd] = useState({})

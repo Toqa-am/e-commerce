@@ -6,6 +6,9 @@ import Products from './components/Products';
 import Cart from './components/Cart';
 import WishList from './components/WishList';
 import Product from './components/Product';
+import SignUp from './components/Signup';
+import Welcom from './components/Welcome';
+import Signin from './components/Signin';
 
 function App() {
   return (
@@ -20,6 +23,9 @@ function App() {
             <Route component={Cart} path='/cart'exact/>
             <Route component={WishList} path='/fave'exact/>
             <Route component={Product} path={`/product/:id`} exact/>
+            <Route component={SignUp} path={`/register`} exact/>
+            <Route component={Welcom} path={`/welcome`} exact/>
+            <Route component={Signin} path={`/signin`} exact/>
 
           </Switch>
 

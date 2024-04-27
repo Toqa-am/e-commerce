@@ -54,3 +54,18 @@ a{
   text-decoration: none; 
   color: rgb(145, 145, 27);
 }
+
+input{
+  /* margin: 20px;
+  padding: auto; */
+}
+
+
+span{
+  color:red;
+  display:none
+}
+
+input:invalid[focused="true"] ~ span{
+  display:block
+}

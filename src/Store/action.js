@@ -43,3 +43,10 @@ export const popListItem=(payload)=>{
         payload:payload
     }
 }
+
+export const signn=(payload)=>{
+    return{
+        type:"SIGN",
+        payload:payload
+    }
+}

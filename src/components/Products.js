@@ -43,11 +43,13 @@ export default function Products(){
 
     const rmvWL=(prod,ind)=>{
         dispatcher(popListItem(ind))
+        prod.addWl=0
         console.log(list)
     }
 
     const addWL=(prod)=>{
         dispatcher(addListItem(prod))
+        prod.addWl=1
         console.log(prod)
     }
     return (

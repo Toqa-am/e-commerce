@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
-import { useSelector } from 'react-redux';
 import { Link } from "react-router-dom/cjs/react-router-dom.min"
 export default function CartCard(props){
     const [showFullDescription, setShowFullDescription] = useState(false);
